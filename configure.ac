@@ -10,12 +10,16 @@ dnl ***************************
 dnl *** Version information ***
 dnl ***************************
 m4_define([libxfce4util_verinfo], [7:0:0])
-XDT_VERSION_INIT([4.18.2])
+m4_define([copyright_year], [2025])
+XDT_VERSION_INIT([4.20.1])
+
+dnl minimum required versions
+m4_define([glib_min_version], [2.72.0])
 
 dnl **************************************************************
 dnl *** Overall Xfce version, modify this when making releases ***
 dnl **************************************************************
-m4_define([xfce_version_string], [4.18])
+m4_define([xfce_version_string], [4.20])
 
 dnl # DO NOT MODIFY ANYTHING BELOW THIS LINE, UNLESS YOU KNOW WHAT
 dnl # YOU ARE DOING.
@@ -23,11 +27,15 @@ dnl # YOU ARE DOING.
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2002-2024
+AC_COPYRIGHT([Copyright (c) 2002-copyright_year()
         The Xfce development team. All rights reserved.])
 AC_INIT([libxfce4util], [xdt_version], [https://gitlab.xfce.org/xfce/libxfce4util])
 AC_PREREQ([2.69])
 AC_REVISION([xdt_version_build])
+AC_DEFINE([VERSION_FULL], [PACKAGE_VERSION], [Alias for VERSION and PACKAGE_VERSION for meson compatibility])
+COPYRIGHT_YEAR=copyright_year()
+AC_DEFINE_UNQUOTED([COPYRIGHT_YEAR], ["$COPYRIGHT_YEAR"], [Copyright year])
+AC_SUBST([COPYRIGHT_YEAR])
 
 dnl ***************************
 dnl *** Initialize automake ***
@@ -48,7 +56,7 @@ AC_SUBST([LIBXFCE4UTIL_VERINFO])
 dnl **********************************
 dnl *** Subst overall Xfce version ***
 dnl **********************************
-AC_DEFINE([XFCE_VERSION_STRING], ["xfce_version_string"],
+AC_DEFINE([VERSION_SHORT], ["xfce_version_string"],
   [Overall Xfce version])
 
 dnl **********************************
@@ -72,8 +80,13 @@ dnl ********************************
 AC_PROG_CC()
 AM_PROG_CC_C_O()
 AC_PROG_INSTALL()
-IT_PROG_INTLTOOL([0.35.0])
-AC_CHECK_PROGS([PERL], [perl5 perl])
+AC_PATH_PROG([XDT_GEN_VISIBILITY], [xdt-gen-visibility], [], [$PWD:$PATH])
+if test x"$XDT_GEN_VISIBILITY" = x"$PWD/xdt-gen-visibility"; then
+  XDT_GEN_VISIBILITY_DIST="xdt-gen-visibility"
+else
+  XDT_GEN_VISIBILITY_DIST=""
+fi
+AC_SUBST([XDT_GEN_VISIBILITY_DIST])
 
 dnl **************************
 dnl *** Initialize libtool ***
@@ -87,12 +100,16 @@ dnl ***************************************
 AC_CHECK_HEADERS([err.h errno.h grp.h limits.h locale.h pwd.h \
                   signal.h sys/stat.h sys/types.h sys/utsname.h \
                   time.h unistd.h stdarg.h varargs.h libintl.h])
-AC_CHECK_FUNCS([gethostname getpwnam setlocale strdup])
+AC_CHECK_FUNCS([gethostname getpwnam setlocale])
 
 dnl ******************************
 dnl *** Check for i18n support ***
 dnl ******************************
-XDT_I18N()
+GETTEXT_PACKAGE="$PACKAGE"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 AC_SEARCH_LIBS([bind_textdomain_codeset], [intl],
   [AC_DEFINE([HAVE_BIND_TEXTDOMAIN_CODESET], [1], [Define to 1 if you have the 'bind_textdomain_codeset' function.])],
   [])
@@ -100,17 +117,17 @@ AC_SEARCH_LIBS([bind_textdomain_codeset], [intl],
 dnl ***********************************
 dnl *** Check for GObject installed ***
 dnl ***********************************
-XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.66.0])
+XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [glib_min_version])
 
 dnl ********************************
 dnl *** Check for GLib installed ***
 dnl ********************************
-XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.66.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
 
 dnl ********************************
 dnl *** Check for GIO installed ***
 dnl ********************************
-XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.66.0])
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
 
 dnl *************************
 dnl *** Check for gtk-doc ***
@@ -120,7 +137,7 @@ GTK_DOC_CHECK([1.20])
 dnl ***************************************
 dnl *** Check for gobject-introspection ***
 dnl ***************************************
-GOBJECT_INTROSPECTION_CHECK([1.66.0])
+GOBJECT_INTROSPECTION_CHECK([1.72.0])
 
 dnl *************************
 dnl *** Check for vapigen ***
@@ -144,22 +161,27 @@ dnl *** Do not replace with the Xdt macro ***
 dnl *** because it cannot cope with the   ***
 dnl *** libxfce4util_*_version variables  ***
 dnl *****************************************
-AC_ARG_ENABLE([visibility], AS_HELP_STRING([--disable-visibility], [Do not use ELF visibility attributes]), [], [enable_visibility=yes])
+AC_ARG_ENABLE([visibility],
+              AS_HELP_STRING([--disable-visibility],
+                             [Do not use ELF visibility attributes]),
+              [enable_visibility=$enableval], [enable_visibility=yes])
 have_gnuc_visibility=no
-if test x"$enable_visibility" != x"no"; then
-  dnl Check whether the compiler supports the visibility attribute
-  save_CFLAGS="$CFLAGS"
-  CFLAGS="$CFLAGS -Wall -Werror"
+if test "x$enable_visibility" != "xno"; then
+  XDT_SUPPORTED_FLAGS([xdt_vis_test_cflags], [-Wall -Werror -Wno-unused-parameter -fvisibility=hidden])
+  saved_CFLAGS="$CFLAGS"
+  CFLAGS="$CFLAGS $xdt_vis_test_cflags"
   AC_MSG_CHECKING([whether $CC supports the GNUC visibility attribute])
   AC_COMPILE_IFELSE([AC_LANG_SOURCE(
   [
-    void test_default (void);
-    void test_hidden (void);
-
-    void __attribute__ ((visibility("default"))) test_default (void) {}
-    void __attribute__ ((visibility("hidden"))) test_hidden (void) {}
-
-    int main (int argc, char **argv) { test_default (); test_hidden (); return 0; }
+    void test_default(void);
+    void test_hidden(void);
+    void __attribute__((visibility("default"))) test_default(void) {}
+    void __attribute__((visibility("hidden"))) test_hidden(void) {}
+    int main(int argc, char **argv) {
+      test_default();
+      test_hidden();
+      return 0;
+    }
   ])],
   [
     have_gnuc_visibility=yes
@@ -168,12 +190,12 @@ if test x"$enable_visibility" != x"no"; then
   [
     AC_MSG_RESULT([no])
   ])
-  CFLAGS="$save_CFLAGS"
+  CFLAGS="$saved_CFLAGS"
 fi
-if test x"$have_gnuc_visibility" = x"yes"; then
-  CPPFLAGS="$CPPFLAGS -DHAVE_GNUC_VISIBILITY"
+if test "x$have_gnuc_visibility" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DENABLE_SYMBOL_VISIBILITY=1"
+  CFLAGS="$CFLAGS -fvisibility=hidden"
 fi
-AM_CONDITIONAL([HAVE_GNUC_VISIBILITY], [test x"$have_gnuc_visibility" = x"yes"])
 
 dnl *****************************
 dnl *** Generate output files ***

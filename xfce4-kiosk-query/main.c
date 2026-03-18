@@ -19,7 +19,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
+#endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
 #endif
 
 #include <stdio.h>
@@ -30,7 +33,7 @@
 #include <unistd.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include "libxfce4util/libxfce4util.h"
 
 
 G_GNUC_NORETURN static void
@@ -58,9 +61,9 @@ int
 main (int argc, char **argv)
 {
   const gchar *module;
-  XfceKiosk   *kiosk;
-  int          ch;
-  int          n;
+  XfceKiosk *kiosk;
+  int ch;
+  int n;
 
   while ((ch = getopt (argc, argv, "hv")) != -1)
     {
@@ -68,11 +71,11 @@ main (int argc, char **argv)
         {
         case 'v':
           printf ("xfce4-kiosk-query %s (Xfce %s)\n\n"
-                  "Copyright (c) 2003-2024\n"
+                  "Copyright (c) 2003-" COPYRIGHT_YEAR "\n"
                   "        The Xfce development team. All rights reserved.\n"
                   "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
                   "Please report bugs to <%s>.\n",
-                  PACKAGE_VERSION, xfce_version_string (), PACKAGE_BUGREPORT);
+                  VERSION_FULL, xfce_version_string (), PACKAGE_BUGREPORT);
           return EXIT_SUCCESS;
 
         case 'h':
@@ -103,5 +106,3 @@ main (int argc, char **argv)
 
   return EXIT_SUCCESS;
 }
-
-
