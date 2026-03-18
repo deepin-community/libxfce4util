@@ -19,7 +19,7 @@
  * Boston, MA 02110-1301 USA
  */
 
-#if !defined(LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
+#if !defined(_LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
 #error "Only <libxfce4util/libxfce4util.h> can be included directly, this file may disappear or change contents"
 #endif
 
@@ -31,10 +31,10 @@
 G_BEGIN_DECLS
 
 #define LIBXFCE4UTIL_MAJOR_VERSION	4
-#define LIBXFCE4UTIL_MINOR_VERSION	16
-#define LIBXFCE4UTIL_MICRO_VERSION	0
+#define LIBXFCE4UTIL_MINOR_VERSION	20
+#define LIBXFCE4UTIL_MICRO_VERSION	1
 
-#define LIBXFCE4UTIL_CHECK_VERSION(major,minor,micro) \
+#define LIBXFCE4UTIL_CHECK_VERSION(major, minor, micro) \
   (LIBXFCE4UTIL_MAJOR_VERSION > (major) \
    || (LIBXFCE4UTIL_MAJOR_VERSION == (major) \
        && LIBXFCE4UTIL_MINOR_VERSION > (minor)) \
@@ -49,7 +49,7 @@ extern const guint libxfce4util_micro_version;
 /* verify that G_GNUC_WARN_UNUSED_RESULT is defined */
 #if !defined(G_GNUC_WARN_UNUSED_RESULT)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-#define G_GNUC_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
+#define G_GNUC_WARN_UNUSED_RESULT __attribute__ ((warn_unused_result))
 #else
 #define G_GNUC_WARN_UNUSED_RESULT
 #endif /* __GNUC__ */
@@ -57,4 +57,4 @@ extern const guint libxfce4util_micro_version;
 
 G_END_DECLS
 
-#endif	/* !__LIBXFCE4UTIL_CONFIG_H__ */
+#endif /* !__LIBXFCE4UTIL_CONFIG_H__ */

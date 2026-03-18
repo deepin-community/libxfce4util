@@ -19,7 +19,7 @@
  * Boston, MA 02110-1301 USA
  */
 
-#if !defined(LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
+#if !defined(_LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
 #error "Only <libxfce4util/libxfce4util.h> can be included directly, this file may disappear or change contents"
 #endif
 
@@ -32,18 +32,25 @@ G_BEGIN_DECLS
 
 /* support macros for debugging */
 #ifndef NDEBUG
-#define _xfce_assert(expr)                  g_assert (expr)
-#define _xfce_assert_not_reached()          g_assert_not_reached ()
-#define _xfce_return_if_fail(expr)          g_return_if_fail (expr)
+#define _xfce_assert(expr) g_assert (expr)
+#define _xfce_assert_not_reached() g_assert_not_reached ()
+#define _xfce_return_if_fail(expr) g_return_if_fail (expr)
 #define _xfce_return_val_if_fail(expr, val) g_return_val_if_fail (expr, (val))
 #else
-#define _xfce_assert(expr)                  G_STMT_START{ (void)0; }G_STMT_END
-#define _xfce_assert_not_reached()          G_STMT_START{ (void)0; }G_STMT_END
-#define _xfce_return_if_fail(expr)          G_STMT_START{ (void)0; }G_STMT_END
-#define _xfce_return_val_if_fail(expr, val) G_STMT_START{ (void)0; }G_STMT_END
+#define _xfce_assert(expr) \
+  G_STMT_START { (void) 0; } \
+  G_STMT_END
+#define _xfce_assert_not_reached() \
+  G_STMT_START { (void) 0; } \
+  G_STMT_END
+#define _xfce_return_if_fail(expr) \
+  G_STMT_START { (void) 0; } \
+  G_STMT_END
+#define _xfce_return_val_if_fail(expr, val) \
+  G_STMT_START { (void) 0; } \
+  G_STMT_END
 #endif
 
 G_END_DECLS
 
 #endif /* !__XFCE_RC_H__ */
-

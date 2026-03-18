@@ -1,3 +1,1318 @@
+commit fe1b3c88e4e0cb45eb490d11dbc7f9cdd83664d9
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Mar 23 08:48:17 2025 +0100
+
+    Updates for release
+
+commit 93d01684ff90a51b9af2d92703f1d4d1a42c1537
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Mar 23 08:24:28 2025 +0100
+
+    autotools-build: Search for xdt-gen-visibility also in the working tree
+    
+    In anticipation of its copying by xfce-do-release when generating
+    tarballs, so as not to need xfce4-dev-tools to build them. Meson takes
+    care of all this, from searching the working tree to adding to the
+    tarball.
+    
+    Related: xfce/xfce4-dev-tools!159
+
+commit cb4ee0516c7bf1458b1c500ae3e6e060bb8e5f72
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Mar 22 08:23:40 2025 +0100
+
+    meson-build: Bump meson min version
+    
+    Fixes: f288fe739af7c07f40509c2e33b949bc38de7575
+
+commit f288fe739af7c07f40509c2e33b949bc38de7575
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Mar 22 08:10:51 2025 +0100
+
+    build: Automate copyright year management
+
+commit ac129f403e704a8f072d544425c19cab5659315a
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Mar 18 10:36:41 2025 +0100
+
+    Replace deprecated exo with libxfce4ui 4.21.0
+    
+    Related: xfce/exo!87
+
+commit 2a1f37bc6ee9b27d8ff0ba585dd9e6b82b5209eb
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Mar 16 19:44:59 2025 +0100
+
+    docs: Ignore visibility header and align build systems
+    
+    Fixes warning about multiple definitions.
+
+commit 2805c0965a7d6993df4653225e00f0aaf6975fc6
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Mar 11 18:39:36 2025 +0100
+
+    build: Remove libxfce4util-config.h from GI
+    
+    This creates unsolvable conflicts with other libs whose identifier
+    prefix is Xfce, since check_version is associated with this prefix
+    several times.
+    
+    Related: https://gitlab.xfce.org/panel-plugins/xfce4-notes-plugin/-/merge_requests/25#note_103386
+
+commit 209e93d77be721cb2cd48ac951e1b541c4559a40
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Mar 4 16:27:22 2025 +0100
+
+    xfce-i18n: Use g_strlcpy instead of falling back to it
+    
+    There was no check for strlcpy, so that was already the case anyway.
+
+commit afcfa50e31a0576fda3e2351fe553e83c8cc38c3
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Mar 4 16:26:12 2025 +0100
+
+    meson-build: Add missing check for varargs.h
+
+commit bd1538ad305dabcdafb0d9015a6a768823f31609
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 10 19:31:42 2025 +0100
+
+    xfce-rc: Fix C locale handling
+    
+    As gettext does: if the C locale is encountered in LANGUAGE, return the
+    untranslated value.
+    
+    Fixes: #29
+
+commit 4d8b47e3afaafbd7c59434bfb60c59ebf51e81ef
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Feb 7 16:51:26 2025 +0100
+
+    meson-build: Use SPDX license expression
+    
+    See https://mesonbuild.com/Reference-manual_functions.html#project_license
+
+commit 21414e1954dc120bef379f77580b435f22218e38
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 3 11:38:14 2025 +0100
+
+    meson-build: Update debug/optimization flag management
+    
+    Related: xfce/xfce4-dev-tools!145
+
+commit 6df744bce7a439ec734f11b0fce96caf245620db
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jan 28 18:08:51 2025 +0100
+
+    build: Use VERSION_FULL intead of VERSION or PACKAGE_VERSION
+
+commit ad64e707e11a0be5cd11382dc74f0702450eb0ff
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Jan 20 11:20:45 2025 +0100
+
+    meson-build: Let pkg.generate() fill in required libs
+    
+    It completes what we put in 'requires' from the dependencies declared in
+    library() anyway, by filling in the 'requires_private' field, whose use
+    is recommended by default. So we probably don't need to fill this in in
+    general: it's one less thing to maintain, and the dependencies we've
+    declared public so far should probably have been declared private
+    instead.
+    
+    See-also:
+    https://mesonbuild.com/Pkgconfig-module.html
+    https://people.freedesktop.org/~dbn/pkg-config-guide.html
+    https://stackoverflow.com/a/61674208
+
+commit 50cb68d1606c21c0b3a3a766619462cfa716d1dd
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jan 17 10:57:22 2025 +0100
+
+    meson-build: Use relative path in gtk-doc
+    
+    So meson searches for source files in the right place by itself (source
+    directory or build directory). meson.project_source_root() prevents it
+    from doing so, while meson.current_source_dir() is simply useless.
+    
+    Fixes: #30
+    Related: https://gitlab.xfce.org/xfce/xfce4-dev-tools/-/merge_requests/140#note_100394
+
+commit 6ea98076910355c1d96a12b8b7d1448cd232cc4f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jan 17 11:14:05 2025 +0100
+
+    meson-build: Check for libintl only if required
+    
+    This speeds up the build _somewhat_ and avoids a red "NO" in text
+    output, which needlessly raises questions.
+
+commit 9c44054bc823e4c835b7650310846985a63e1ef8
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jan 17 11:52:23 2025 +0100
+
+    meson-build: Remove duplicated CFLAGS
+
+commit 1066989337672616de3604246820b126f452640d
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Jan 13 11:36:42 2025 +0100
+
+    meson-build: Gobject introspection cleanup
+
+commit bb9d5246844695eb87e615cc7a522ff69dca1aea
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Jan 12 16:24:07 2025 +0100
+
+    Fix namespace for GObject introspection in meson build too
+    
+    Completes: a348bd36d70c8e516cd9f57ce02b0fc01781a552
+
+commit a348bd36d70c8e516cd9f57ce02b0fc01781a552
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jan 10 22:17:11 2025 +0100
+
+    Fix namespace for GObject introspection
+    
+    Related: libxfce4ui!134
+
+commit 64cfaa6a78a0963390631755119e79c2f148477b
+Author: Erkki Moorits <erkki.moorits@mail.ee>
+Date:   Thu Jan 9 10:47:51 2025 +0200
+
+    Removed extra ';' in header files.
+
+commit efa53b3c28da7494dab99868d7849adeaeade8e7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jan 7 13:02:24 2025 +0100
+
+    build: Remove unused check for XDT_CHECK_ABI
+    
+    Completes: fceecb4f15082ef89e1c5bf2f4fec27b8e240d53
+
+commit dcf4e242e88a256c645e5a9047acda747f3cbeec
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jan 7 12:45:25 2025 +0100
+
+    build: Add missing update of --enable-visibility flag
+    
+    Fixes: 54d0c348c643e5dc204dc4fc69922c5f616ebf04
+
+commit 5a6952ed267a2e72febd01b4acce0e303b0ed3fd
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Jan 5 11:36:15 2025 +0100
+
+    docs: Don't run gtkdoc-check
+    
+    It's too demanding, we don't usually respect this (*--undocumented.txt
+    and *-undeclared.txt should be empty).
+
+commit f0d14fea7c0ad2f1d9ebabecca0ab69e33559ca0
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Jan 5 10:53:55 2025 +0100
+
+    build: Bump xdt required version
+    
+    Required since 54d0c348c643e5dc204dc4fc69922c5f616ebf04.
+
+commit 32c045682f41f621695a233ab5b81407a1c5fd74
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Jan 1 11:12:43 2025 +0100
+
+    docs: Remove generated types from repository
+    
+    Fixes: 3500bc21cc0040d9fd55aae413a9901ae41e50aa
+
+commit ed76c8ff821f3fdba0b126c5bc0b6aed811daa3c
+Author: Anonymous <noreply@xfce.org>
+Date:   Wed Dec 18 00:45:51 2024 +0100
+
+    I18n: Update translation ro (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 70a4e3c68a031182af51ab6ae20636fc87a1527a
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Sun Dec 15 15:06:17 2024 -0800
+
+    Add libxfce4util/meson.build to Makefile.am EXTRA_DIST
+
+commit d4609b0f78f697f0f3490aa995f2c7ef3d490fad
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 15 09:54:24 2024 +0100
+
+    Back to development
+
+commit 55342a8da4e0cb594e1bdfacf9c3a16d50cbd17b
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 15 09:49:13 2024 +0100
+
+    Updates for release
+
+commit 072e97ed59f33f1df298d3e216ba64ca6339bfe4
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Dec 2 12:46:08 2024 +0100
+
+    I18n: Update translation pl (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 14e6e752fe403d1dc70314991bf6cc9faef87917
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 1 16:14:59 2024 +0100
+
+    Back to development
+
+commit 0a1d330e9f362af075bd309c92dfb75b6f5bcc1b
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 1 16:13:21 2024 +0100
+
+    Updates for release
+
+commit 7d70233d95bca1a9db9ff534d109c6872165c953
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Dec 1 10:12:02 2024 +0100
+
+    Bump Xfce overall version to 4.20pre2
+
+commit 0bbb6f2309fb05762dacb60ebd0c8ca1a483654a
+Author: Anonymous <noreply@xfce.org>
+Date:   Tue Nov 19 10:02:03 2024 +0100
+
+    I18n: Update po/LINGUAS list
+
+commit 71b1d8efb132a44e9d79c1600725f7048489d7ec
+Author: Anonymous <noreply@xfce.org>
+Date:   Tue Nov 19 10:02:02 2024 +0100
+
+    I18n: Add new translation te (42%).
+    
+    3 translated messages, 4 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit e72c1b4b989fc75d1024a49e3089915d6590a6da
+Author: Anonymous <noreply@xfce.org>
+Date:   Tue Nov 19 10:02:02 2024 +0100
+
+    I18n: Update translation am (42%).
+    
+    3 translated messages, 4 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 4c1294be1bf6d649d36f96cd3dad65d861b317fa
+Author: correctmost <11866-correctmost@users.noreply.gitlab.xfce.org>
+Date:   Thu Nov 7 16:15:50 2024 -0500
+
+    Call xfce_kiosk's parent finalizer to prevent leaks
+
+commit 105eb8195528408f22d06cc0b1ce2eccf6b7faf3
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Fri Nov 1 22:23:45 2024 +0100
+
+    Back to development
+
+commit d55a96afd100fabccb073878e2f0503737f2a834
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Fri Nov 1 22:21:23 2024 +0100
+
+    Updates for release
+
+commit 74fc584c0b0ca85d5e212f1a24cee55f5a360e65
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Fri Nov 1 08:12:33 2024 +0100
+
+    bump Xfce overall version to 4.20pre1
+
+commit fceecb4f15082ef89e1c5bf2f4fec27b8e240d53
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Fri Oct 18 15:01:02 2024 -0700
+
+    Remove local ABI check
+    
+    This will be done in CI going forward.
+
+commit 3500bc21cc0040d9fd55aae413a9901ae41e50aa
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Fri Oct 18 00:04:34 2024 -0700
+
+    Add meson build
+
+commit 54d0c348c643e5dc204dc4fc69922c5f616ebf04
+Author: Brian J. Tarricone <brian@tarricone.org>
+Date:   Thu Oct 17 23:58:35 2024 -0700
+
+    Migrate to xdt-gen-visibility and xdt-check-abi
+
+commit d63a4ed9618443c6ef57eb8d2830804203f8d499
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Oct 11 00:45:49 2024 +0200
+
+    I18n: Update po/LINGUAS list
+
+commit cda57050278bd12eb9c0e090f69190b5bc9624c5
+Author: Anonymous <noreply@xfce.org>
+Date:   Fri Oct 11 00:45:49 2024 +0200
+
+    I18n: Add new translation fa_IR (57%).
+    
+    4 translated messages, 3 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit c14d5b1b270d6a505f19e1247b9729c7d4483644
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Oct 2 17:48:02 2024 +0200
+
+    build: Bump requirements for Xfce 4.20
+
+commit 481fb3bf61518741f80957d58216c79db3e7ffb2
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Sep 13 17:20:18 2024 +0200
+
+    Apply .clang-format file
+
+commit 0367087d64fba6cd3a3583bd3dfb91b7cb0b765e
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Sep 13 17:12:45 2024 +0200
+
+    Add missing includes of libxfce4util-alias.h
+
+commit d138ec279b1b61a9bc426d9d2c820fefcba3f9bc
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Sep 13 16:48:06 2024 +0200
+
+    Sort includes
+
+commit 6c366dab5f18d5fc6a99f1962aba5b2dbfc30881
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Sep 13 16:37:11 2024 +0200
+
+    clang-format: Add file
+    
+    Related: apps/orage#32, xfce/xfce4-dev-tools!101
+
+commit b2a2aee40956e194944031432d7147c0d5613e93
+Author: keremet <keremet@solaris.kirov.ru>
+Date:   Mon Aug 26 11:11:02 2024 +0000
+
+    xfce-rc: Fix support for the LANGUAGE environment variable
+    
+    When LANGUAGE contained more than one language code and there was a
+    translation to the first language in a .desktop file, a translation to
+    the second language was returned in the case when the line for the
+    second language was above the line for the first one. Now translation
+    for the first language is returned regardless of the line order. The
+    `entry != NULL` condition is inverted to make the diff smaller and
+    reduce the amount of indentation.
+    
+    Fixes: 3a279d2b5fd5315e0273bf2ced12dcbb9ab9de46
+
+commit c92660ebe85cfe78f8d1809b13f2e48757c7bde0
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Jun 6 22:38:28 2024 +0200
+
+    scan-build: Add false positive file
+
+commit 0c30bb194e77c32a730d26616c671b1e09deeb2b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Jun 4 12:58:41 2024 +0200
+
+    build: Use AM_DISTCHECK_CONFIGURE_FLAGS
+    
+    So user can extend or override the flags provided there by defining the
+    DISTCHECK_CONFIGURE_FLAGS variable. Especially required since
+    xfce/xfce4-dev-tools!108.
+
+commit ac83bcc2bc6234b2f3a98b299015de861eed9ab0
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat May 25 16:57:35 2024 +0200
+
+    session-management: Try to create D-BUS proxy synchronously
+    
+    The problem arises, for example, with xfce4-power-manager-settings,
+    which starts xfce4-power-manager if it's not already running, and then
+    calls org.xfce.Power.Manager.GetConfig, which in turn queries
+    XfceSystemd for sleep, shutdown, etc. capabilities. The proxy may not
+    yet have been created in this case.
+    
+    Generally speaking, it's probably best if the returned object is
+    immediately (actually) usable, if possible, even if it means blocking
+    the time needed for this.
+    
+    Fixes: c11acc334a00d65fde8211a1ed525cd76a0c88ec
+
+commit aaf5aadce9195e09ec0702b7077a8afe0a4ca769
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat May 25 16:47:20 2024 +0200
+
+    session-management: Always set an error when returning FALSE
+    
+    Fixes: c11acc334a00d65fde8211a1ed525cd76a0c88ec
+
+commit a2ea6cc35791b8ccc654ebfe9e30a017e784d418
+Author: Anonymous <noreply@xfce.org>
+Date:   Thu May 9 00:46:10 2024 +0200
+
+    I18n: Update translation lt (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 26bcdaecfb864e8f1d8cb8e7ba0d63ddf2cad921
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Apr 15 00:46:04 2024 +0200
+
+    I18n: Update translation ast (57%).
+    
+    4 translated messages, 3 untranslated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit b5b8ccfd22b9bbe68006591e142d44189d6f6ad4
+Author: Anonymous <noreply@xfce.org>
+Date:   Tue Apr 2 00:47:04 2024 +0200
+
+    I18n: Update translation hu (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit dec5f7c4b371efdcae06e0d81a72c6aa734df8bd
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Mar 27 16:01:16 2024 +0100
+
+    fileutils: Fix MD5 hash in xfce_create_shared_thumbnail_path()
+    
+    Fixes: bd4f28c34bec5c73d45f76d408d2db4a151863b6
+    Closes: #24
+
+commit 534e48bdb1d997c17903ecf709afe07ef758f6ab
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon Feb 12 12:45:38 2024 +0100
+
+    I18n: Update translation el (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 2fca108f66c8f152029853847f9ae3c297a4ab05
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 5 19:39:59 2024 +0100
+
+    Back to development
+
+commit 6002992fcfd6a66fa9fcabfcf327c1e0e2405286
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 5 19:39:06 2024 +0100
+
+    Updates for release
+
+commit 80acb7c073126712d672aba1164f88146140c2cd
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Feb 5 19:25:56 2024 +0100
+
+    Update copyright year
+
+commit 06f0b51054989967e53b96072fc784f6f56a7056
+Author: Guido Falsi <madpilot@freebsd.org>
+Date:   Thu Jan 11 16:48:54 2024 +0000
+
+    Search for bind_textdomain_codeset in libintl too
+    
+    In FreeBSD bind_textdomain_codeset is provided by external package
+    gettext via libintl.
+    
+    Fixes: #25
+
+commit 3a279d2b5fd5315e0273bf2ced12dcbb9ab9de46
+Author: keremet <keremet@solaris.kirov.ru>
+Date:   Wed Nov 29 14:20:29 2023 +0000
+
+    xfce-rc: Add support for the LANGUAGE environment variable
+
+commit 65b2177f5d4630fc00711e2ed2767b76fe67d2b9
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 11 20:18:21 2023 +0200
+
+    session-management: Fix name watching management
+    
+    This was not a problem for xfce4-session and xfce4-power-manager where
+    the lifetime of these objects is that of the main loop, but otherwise
+    there could be use-after-free in name watching callbacks.
+    
+    Related: !37
+
+commit c1c38cd359efdbaa8f08a715b491457d82ea017b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 11 16:03:56 2023 +0200
+
+    Back to development
+
+commit 36f099b9c31f43c4b23932bb930c596e3cdfd847
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 11 16:03:36 2023 +0200
+
+    Updates for release
+
+commit 25ecb23f94b17a07aeb41fdcd348c39f4fc7379f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 11 13:15:44 2023 +0200
+
+    Allow disabling polkit interactivity in session management (Fixes #21)
+
+commit 6107c67d9a0af9a4c24aa9892cc80ef5222ad14b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed May 10 18:43:12 2023 +0200
+
+    consolekit: Complete implementation
+    
+    Adds auth_* parameter to can_reboot() and can_power_off() since
+    corresponding ConsoleKit2 D-Bus methods behave the same as other can_*()
+    methods, and return proper values in can_* and auth_* locations,
+    following the specification.
+    
+    Fixes: #20
+    Related: https://consolekit2.github.io/ConsoleKit2/
+
+commit ad8be53e6988fadee2b3b54cd3c52a2a5e05c9f7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed May 10 18:31:56 2023 +0200
+
+    consolekit: Use Reboot and PowerOff ConsoleKit2 methods
+    
+    Fallback on old methods only if new ones do not exist.
+
+commit fc58962a0c1a5e5e006bd22ed1cb95256bf20647
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed May 10 17:55:46 2023 +0200
+
+    consolekit: Name methods according to the specification
+    
+    We're going to break the API in next commits anyway, so let's take the
+    opportunity to do that.
+
+commit 7b8a513ec94768856c0541a62eea5ae8c314e62f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed May 10 17:21:50 2023 +0200
+
+    systemd: Complete implementation
+    
+    Adds auth_* parameter to can_reboot() and can_power_off() since
+    corresponding systemd D-Bus methods behave the same as other can_*()
+    methods, and return proper values in can_* and auth_* locations,
+    following the specification.
+    
+    Fixes: #20
+    Related: https://www.freedesktop.org/software/systemd/man/org.freedesktop.login1.html
+
+commit 3a2fbc0a144fab97b55b959885f76be4985e5290
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed May 10 16:47:54 2023 +0200
+
+    systemd: Name methods according to the specification
+    
+    We're going to break the API in the next commit anyway, so let's take
+    the opportunity to do that.
+
+commit d353b47dceb6b6c0e250f1639e4b67c3817a0914
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun May 7 10:17:52 2023 +0200
+
+    Back to development
+
+commit 23283e76db43bc80a3f61bffe4f91fa6cf80d458
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun May 7 10:16:59 2023 +0200
+
+    Updates for release
+
+commit c11acc334a00d65fde8211a1ed525cd76a0c88ec
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Apr 30 23:01:51 2023 +0200
+
+    Add XfceConsolekit and XfceSystemd
+    
+    It's about sharing code used by xfce4-session and xfce4-power-manager,
+    like XfceScreensaver in libxfce4ui!89. There were more differences
+    between the two sources this time though. Xfce4-session was preferred,
+    both because the API was more extensive and because the implementation
+    was better.
+    
+    Related: libxfce4ui!89
+
+commit aa37149c3f39b565f10b5b0802f06de827c39d91
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 4 22:42:52 2023 +0200
+
+    I18n: Update po/LINGUAS list
+
+commit f7551a5b4361121ee5bf8e51ef136044ec8c38e3
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu May 4 21:49:07 2023 +0200
+
+    I18n: Update po/LINGUAS list
+
+commit 79e07bc2e9b08b29f7efb7784b0cc360fb35acac
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue May 2 16:23:40 2023 +0200
+
+    Add missing config.h includes
+
+commit 1f19170893017d3cb012114450797f44bd3d9d27
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Thu Apr 27 14:14:23 2023 +0000
+
+    Improve checksum calculation (#17)
+    
+    Instead of attempting to read the whole file at once, repeatedly read small chunks of the file and accordingly update the checksum with 'g_checksum_update'. That allows to process files which are bigger than the available memory.
+    
+    Fixes #17
+    MR !36
+
+commit 1a720b4ae2b94df8b1d6edc80c9e6ff1e16bff81
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 17 13:20:02 2023 +0200
+
+    Back to development
+
+commit 9dd7973fd9dac289f65168f0eb5516a6f91fb392
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 17 13:19:42 2023 +0200
+
+    Updates for release
+
+commit 96de9fcecb13264928409daf64bc387370e6d6e5
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 19:30:32 2023 +0200
+
+    Update copyright year also in kiosk-query
+
+commit d4d70c36ef2a4675860ade240c756bd55d78efef
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 18:55:06 2023 +0200
+
+    build: Use m4_defined min versions and cleanup
+
+commit 3072fa9a87839f122495db6c1b08251be74a51cc
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Apr 12 18:50:12 2023 +0200
+
+    build: Switch from intltool to gettext
+    
+    Related: xfce/xfce4-dev-tools#41
+
+commit a4eb3b70c995d52b7e610feddf20a643bc635937
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 3 14:38:11 2023 +0200
+
+    xfce-rc: Document the fact that delimiter escaping is not supported
+
+commit eed79633595f5df1f851caa603a34e901bdda2c6
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Apr 3 14:29:01 2023 +0200
+
+    xfce-rc: Properly write translated entries when available
+    
+    The untranslated entry was written in place of all the translated
+    entries. This was never noticed because XfceRc is probably rarely or
+    never used to edit desktop files with translations.
+
+commit a2a7fd0ac231058af960a2dd8ff27752ad3e0768
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Feb 18 16:52:14 2023 +0100
+
+    Update bug report address
+
+commit 9450aeebe2ad9aa24da1495eb17969238a50deeb
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Feb 7 14:23:18 2023 +0100
+
+    docs: Properly enable GI docs
+    
+    Not super useful since the few objects present have no properties or
+    signals, but since the support is there we might as well use it.
+
+commit 59ff7354e165c7920fc388d2ba3f48c69feefb20
+Author: Anonymous <noreply@xfce.org>
+Date:   Sun Jan 22 00:45:20 2023 +0100
+
+    I18n: Update translation fr (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit f7be7653ad6b6d42695c5955dd81bc5ee294be62
+Author: Anonymous <noreply@xfce.org>
+Date:   Sun Jan 15 12:45:23 2023 +0100
+
+    I18n: Update translation el (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://explore.transifex.com/xfce/).
+
+commit 7cf0420fe70271fc86a9b99ef1de6edfa3c140b3
+Author: Andre Miranda <andreldm@xfce.org>
+Date:   Mon Jan 2 23:04:53 2023 +0100
+
+    Handle remaining escape sequences
+
+commit 7c522ef8139e86ba2ed3dd8f49c7a4d50594c6f1
+Author: Andre Miranda <andreldm@xfce.org>
+Date:   Mon Jan 2 19:35:47 2023 +0100
+
+    Fix desktop entry value escaping
+    
+    Do not remove unescaped backslashes.
+
+commit 9d607f77e9ecc09de2078ef9ba44c7578fccd250
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Dec 15 09:54:34 2022 +0100
+
+    Back to development
+
+commit 32d2db829d78c3f0573fe440a5250954fab5eda9
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Dec 15 09:54:10 2022 +0100
+
+    Updates for release
+
+commit 6ad47d4a613a81f675b889b416d694d01b0fdee3
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Dec 5 20:33:01 2022 +0100
+
+    build: Bump requirements for Xfce 4.18
+
+commit 1918c40d05d7f19193430e150cb1ffa618adda78
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 30 16:42:55 2022 +0100
+
+    Back to development
+
+commit b2e69aa5a18932f3a74bff7bdc785d182b7a5de2
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 30 16:42:28 2022 +0100
+
+    Updates for release
+
+commit b5047b47302e54003d00ea23364f8c1bc715acd0
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sat Nov 12 22:08:15 2022 +0100
+
+    bump copyright to 2022
+
+commit d7ce7094c6d7ea238d2c6d97a8535251ca3edd03
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Nov 2 18:23:24 2022 +0100
+
+    docs: Fix return value of xfce_str_replace()
+
+commit 37802977b8152c215b8d6743208abda78fb0603b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Oct 31 17:04:57 2022 +0100
+
+    Back to development
+
+commit 83c041afe2bc85ba1ac4fd6f5afdc1be4b827338
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Mon Oct 31 17:04:29 2022 +0100
+
+    Updates for release
+
+commit e2f2a6eb970687d3cbf47fa0e684e27cf6e8dad9
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Oct 7 17:37:04 2022 +0200
+
+    Revert "Add 'xfce_g_desktop_app_get_value' GIO extension"
+    
+    This reverts commit 1dfc50ae07deea3644dd57730bb611dff5a60a08.
+    See https://gitlab.xfce.org/xfce/libxfce4util/-/merge_requests/30#note_55726
+
+commit 0c334855388c1c478cd5c0110676a4eecaddf6d0
+Author: Andre Miranda <andreldm@xfce.org>
+Date:   Wed Oct 5 22:00:34 2022 +0200
+
+    Update COPYING
+    
+    Based on https://www.gnu.org/licenses/old-licenses/lgpl-2.0.txt
+
+commit 0d640f3b5fb914981c327c67b7fba84b511e8d38
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Tue Sep 6 16:40:24 2022 +0200
+
+    Bump GObject Introspection minim version to 1.66
+    
+    In order to make this package LTO ready
+    
+    For more details, see xfconf#8
+
+commit 1dfc50ae07deea3644dd57730bb611dff5a60a08
+Author: Simon Steinbeiß <ochosi@xfce.org>
+Date:   Mon Sep 5 21:01:10 2022 +0000
+
+    Add 'xfce_g_desktop_app_get_value' GIO extension
+    
+    This GIO extension should make it easier to get values for an application
+    from the corresponding desktop file (typically `G_KEY_FILE_DESKTOP_KEY_NAME`
+    or `G_KEY_FILE_DESKTOP_KEY_ICON`).
+    At its first try, `xfce_g_desktop_app_get_value` will look for
+    `$application_name.desktop` and then return the respective key.
+    If no such desktop file is found, it will leverage GIO's
+    `g_desktop_app_info_search` to match a desktop file and then return
+    the values from that.
+    
+    If no desktop file is found at all, the function returns `NULL`.
+    
+    This function can be used by Xfce applications to match application name
+    and icon when only incomplete information is available.
+
+commit a9a32758c078e55fcb31984a91c36ff67bade8e5
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Sep 4 22:17:42 2022 +0200
+
+    docs: Add missing index of deprecated symbols
+
+commit 6a779330ebdffe7d56ec7ca2f7680ada9d2f5ebe
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Sep 4 19:47:45 2022 +0200
+
+    docs: Fix broken links
+
+commit b54f32222975859656a87f1cc2b8f9c274f6937a
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Sep 4 19:14:27 2022 +0200
+
+    docs: Fix "unused declarations" warning
+    
+    * Use private and standard subsections
+    * Use /*< private >*/
+    * LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H -> _LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H
+
+commit 17f0220377cbcaefbbe7e89dda88631991b238be
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Sep 4 18:15:27 2022 +0200
+
+    docs: Update `.gitignore`
+
+commit 2b3fcd2b4b08da6cd8813e6dd3255b12fd66b803
+Author: Andrey Sokolov <keremet@solaris.kirov.ru>
+Date:   Sun Aug 7 23:53:44 2022 +0300
+
+    Remove limit on the size of configuration file line
+
+commit 98f317dcb91bac5145cab4473ec86ab98ac3a2a8
+Author: FULL NAME <EMAIL@ADDRESS>
+Date:   Tue Jul 26 00:45:45 2022 +0200
+
+    I18n: Add new translation ka (57%).
+    
+    4 translated messages, 3 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 20ee61de842349bc73a5e93c6358109a80df6947
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Tue May 31 22:36:35 2022 +0200
+
+    Fix documentation of 'xfce_str_is_empty'
+
+commit ff3e60f2782859965711af64cff364841a935159
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Mon Jan 11 23:46:08 2021 +0100
+
+    Clean the build system and use the new XDT_VERSION_INIT
+    
+    - XDT_VERSION_INIT is available since xfce4-dev-tools 4.15.0, and
+      simplify versions initialization in configure
+    - We can directly use a configure.ac file now
+    - update configure.ac syntax
+
+commit b0d4735b9a564ebefc60fb149faf2a323d3199e1
+Author: Πέτρος Σαμαράς <psamaras1@gmail.com>
+Date:   Mon May 9 00:45:40 2022 +0200
+
+    I18n: Update translation el (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 97210f772f027b3dceac91edc6a15f11f23ef977
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon May 2 12:45:56 2022 +0200
+
+    I18n: Update translation el (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit c2c43cf5aacebf1c45333c4082aafe0f0643a5e9
+Author: Anonymous <noreply@xfce.org>
+Date:   Mon May 2 00:45:43 2022 +0200
+
+    I18n: Update translation el (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 4994ae7cca5882e5a444d4ee3b924374de2156aa
+Author: Əmrə Türkoğlu Tutsaq <mdyos@inbox.ru>
+Date:   Fri Apr 1 00:45:44 2022 +0200
+
+    I18n: Add new translation az (57%).
+    
+    4 translated messages, 3 untranslated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 0ec33ec5747889bf58ec949a9bbf2b81e8dcbe5b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Thu Mar 24 12:54:05 2022 +0100
+
+    Silence `-Wanalyzer-null-dereference` warnings
+    
+    If I'm not mistaken this check is not really necessary, i.e. these
+    warnings are false positives. However, the code of `simple_parse_line()`
+    is at least not clear enough to make this clear, so it's better to add
+    it.
+
+commit 64420b499caaf10530488123c0d427779b76282b
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Mar 20 15:59:46 2022 +0100
+
+    doc: Fix typo in `xfce_*_append_quoted()`
+    
+    Related to !24.
+
+commit 7316159f999e89746b11dd9bdcff440dbbd1dc04
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Wed Mar 16 12:41:58 2022 +0100
+
+    xfce-miscutils: Fix `deadcode.DeadStores` warning from `scan-build`
+
+commit 9f9e7390eb94a6947a69699913fb876705393e8f
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sat Mar 12 17:22:10 2022 +0100
+
+    i18n: Make sure to set locale according to environment
+    
+    This does not always seem necessary but is generally safer, see
+    https://www.gnu.org/software/libc/manual/html_node/Setting-the-Locale.html
+
+commit 0ef5af7114fd357d7cdb8b20c66f69791858a21c
+Author: 玉堂白鹤 <yjwork@qq.com>
+Date:   Thu Feb 24 12:45:47 2022 +0100
+
+    I18n: Update translation zh_CN (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 2f64c7857defd6cccb4435b38b8e016a3a3d1651
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Mon Feb 21 22:11:26 2022 +0100
+
+    Back to development
+
+commit 909955cfc8804b3d826df9fbb6565ef35e841b56
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Mon Feb 21 22:03:06 2022 +0100
+
+    Updates for release
+
+commit f1559ff42c645d9c25564dbac892b52369f2f982
+Author: MShrimp4 <mshrimp@sogang.ac.kr>
+Date:   Fri Feb 18 23:32:55 2022 +0900
+
+    Memo for future devs: Deprecate xfce_str_replace()
+
+commit b9cafbf2e2a54a698519ed399ac45d326a77d27c
+Author: MShrimp4 <mshrimp@sogang.ac.kr>
+Date:   Fri Feb 18 21:47:43 2022 +0900
+
+    Fix document generation error
+
+commit bf2674e9874c5b204907d892690aa601331a9b49
+Author: MShrimp4 <mshrimp@sogang.ac.kr>
+Date:   Fri Feb 18 21:36:04 2022 +0900
+
+    Remove duplicate xfce_str_is_empty ()
+
+commit 69770ec0b2c6019e2b86597f8c89d653fec50df0
+Author: MShrimp4 <mshrimp@sogang.ac.kr>
+Date:   Fri Feb 18 21:25:10 2022 +0900
+
+    Move xfce_append_quoted () to xfce-string
+    
+    xfce_append_quoted () => xfce_g_string_append_quoted ()
+
+commit 28ce8f4fb53092dbe85bc2e5f96e9135b4f51f7b
+Author: MShrimp4 <mshrimp@sogang.ac.kr>
+Date:   Fri Feb 18 11:29:45 2022 +0900
+
+    xfce-string
+    
+    Related: (exo#82)
+    
+    Migrated useful functions from exo-string
+    
+    Functions
+    xfce_str_replace  : Find and replace substring
+    
+    Macros
+    xfce_str_is_empty : Check if a string is either empty or NULL
+    I_                : Abbreviation for g_intern_static_string
+
+commit e3a9b0d2b22fdbaa1a9c4ecbac64cfe843b8b509
+Author: Jan Ziak <0xe2.0x9a.0x9b@xfce.org>
+Date:   Sun Jan 30 23:30:11 2022 +0100
+
+    Remove invalid custom ngettext() macro
+    
+    This patch removes all custom gettext macro definitions. There are multiple
+    issues with these macros:
+    
+    - They are redundant: gettext functions are already declared in <libintl.h>
+    - The implementations of the ngettext macros are invalid
+    - If an Xfce GUI app or plugin accidentally uses any of the gettext macros
+      defined in xfce-i18n.h, then it completely disables localication in the
+      app or plugin
+    
+    The file <libintl.h> containing the declaration of gettext() has been
+    included by both <gi18n.h> and <gi18n-lib.h> since year 2008 (at least).
+    
+    The removal also resolves the following warning messages:
+    
+    GISCAN Libxfce4util-1.0.gir
+    xfce-i18n.h:61: Warning: Libxfce4util: symbol='gettext': Unknown namespace for symbol 'gettext'
+    xfce-i18n.h:62: Warning: Libxfce4util: symbol='dgettext': Unknown namespace for symbol 'dgettext'
+    xfce-i18n.h:63: Warning: Libxfce4util: symbol='dcgettext': Unknown namespace for symbol 'dcgettext'
+    xfce-i18n.h:64: Warning: Libxfce4util: symbol='ngettext': Unknown namespace for symbol 'ngettext'
+    xfce-i18n.h:65: Warning: Libxfce4util: symbol='dngettext': Unknown namespace for symbol 'dngettext'
+    xfce-i18n.h:66: Warning: Libxfce4util: symbol='dcngettext': Unknown namespace for symbol 'dcngettext'
+    
+    Closes: https://gitlab.xfce.org/xfce/libxfce4util/-/issues/7
+
+commit e25e7ff679b8d4d597a4e5e6bd50f2ce631f7b20
+Author: Gianvito Cavasoli <gianvito@gmx.it>
+Date:   Wed Sep 22 00:45:34 2021 +0200
+
+    I18n: Update translation it (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 7ab50d208a675c0a96cf42eaca1358e062c9d5bd
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Sun Aug 8 16:00:14 2021 +0200
+
+    Fix some GObject introspection warnings
+    
+    Adding GIO to gir_INCLUDES is not enough, one must also avoid conflicts
+    with vapigen (see https://wiki.gnome.org/Projects/Vala/UpstreamGuide).
+    
+    Related to !16.
+
+commit ed6b2e1c9c100a9b780edfdd5f36f634f30fec54
+Author: Jan Ziak <0xe2.0x9a.0x9b@xfce.org>
+Date:   Sun Aug 1 02:26:53 2021 +0200
+
+    Add missing G_BEGIN_DECLS and G_END_DECLS
+    
+    The missing directives prevent libxfce4util to be used from C++ code.
+
+commit 603e7ae0d91590f489d5a015e39d00a357b38e77
+Author: Daniel Muñiz Fontoira <dani@damufo.eu>
+Date:   Fri Jul 23 15:47:56 2021 +0200
+
+    I18n: Update translation gl (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit a67181b6d05d38b0f478971b859e53ecd3fb9d9d
+Author: Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>
+Date:   Fri Jul 23 15:47:55 2021 +0200
+
+    I18n: Update translation ca (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 9d77491673d26f21b39dcefb219c899dffd85064
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Jul 18 23:42:56 2021 +0200
+
+    Back to development
+
+commit 546a8404050459a7b4d5bd264d11d1748f71d940
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sun Jul 18 23:36:07 2021 +0200
+
+    Updates for release
+
+commit bd4f28c34bec5c73d45f76d408d2db4a151863b6
+Author: Sergios - Anestis Kefalidis <sergioskefalidis@gmail.com>
+Date:   Sun Jul 18 11:24:45 2021 +0300
+
+    Create new function xfce_create_shared_thumbnail_path
+    MR !18
+    Issue thunar#262
+
+commit e8547f2a00ba3477e41a26537d27e07efc3318ff
+Author: Olaf Hering <olaf@aepfle.de>
+Date:   Tue Jul 6 13:39:23 2021 +0200
+
+    usage of g_file_peek_path requires glib 2.56
+    
+    Fixes commit c881265b1e421bbf1cbf3f6afe5649f96cd8decc
+    
+    Signed-off-by: Olaf Hering <olaf@aepfle.de>
+
+commit da9d244d6531d6acc318c2a3ba149f1c9c42b2f2
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sat Jun 26 22:31:17 2021 +0200
+
+    Back to development
+
+commit 4466dbc20f94d1b5814b6adf45809466b852655e
+Author: Alexander Schwinn <alexxcons@xfce.org>
+Date:   Sat Jun 26 22:27:22 2021 +0200
+
+    Updates for release
+
+commit 05af8d22462b9fc783bf5fa0eb1a72add7a455f5
+Author: Andre Miranda <andreldm@xfce.org>
+Date:   Mon May 10 19:56:41 2021 -0300
+
+    Add xfce_unescape_desktop_entry_value
+    
+    Relates to appfinder#8
+
+commit c881265b1e421bbf1cbf3f6afe5649f96cd8decc
+Author: Yongha Hwang <mshrimp@sogang.ac.kr>
+Date:   Wed Jun 23 21:06:20 2021 +0000
+
+    xfce-gio-extensions
+    
+    Related : thunar#156 (comment 18095)
+    
+    xfce_g_file_metadata_is_supported : Check if metadata is supported
+    xfce_g_file_create_checksum       : Generate SHA-256 of the file
+    xfce_g_file_set_trusted           : Set trusted attribute/checksum in metadata
+    xfce_g_file_is_trusted            : Check trusted attribute/checksum
+    
+    MR !16
+
+commit 4abb3b553af89351366655a8a7ecf41ea8cdb564
+Author: vishal sharma <vishalsh533@gmail.com>
+Date:   Tue May 25 08:16:42 2021 +0000
+
+    libxfce4util needs to be first character Capital.
+
+commit 6d6b8641965b4904acb2e9eb3095a485c2a42a92
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat Apr 24 12:47:26 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 497f7e25c868f14eb4cde34a1e6fb33eb69010a9
+Author: heskjestad <cato@heskjestad.xyz>
+Date:   Thu Apr 22 10:03:04 2021 +0200
+
+    I18n: Update translation nb (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 1b4d5eba3584d0bd3258874c47ee1e3e30496514
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Tue Apr 13 12:18:33 2021 +0200
+
+    Partially revert "Fix (some) GObject introspection warnings"
+    
+    This partially reverts commit df016240783fdf09b517eb2c051d4e5c951e54f7,
+    to avoid confusion in `*_VERSION` macros naming when linking.
+    
+    Fixes xfce4-panel#467.
+
+commit df016240783fdf09b517eb2c051d4e5c951e54f7
+Author: Gaël Bonithon <gael@xfce.org>
+Date:   Fri Jan 22 17:38:47 2021 +0100
+
+    Fix (some) GObject introspection warnings
+
+commit 765b27fb8b4857ee3c40e45c098240c8ac6bf2e4
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat Apr 10 00:45:10 2021 +0200
+
+    I18n: Update translation es (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 8e25d8d5cf26a6096263e1fd87fb22e5fb21ad8b
+Author: Priit Jõerüüt <transifex@joeruut.com>
+Date:   Tue Apr 6 00:45:23 2021 +0200
+
+    I18n: Update translation et (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 5367891516239ca8b0034c5a197330285a86230f
+Author: Toni Estévez <toni.estevez@gmail.com>
+Date:   Sat Mar 13 12:45:26 2021 +0100
+
+    I18n: Update translation es (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit faed5ecc5d95ca08fe9e79f46da9e0742b787771
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Sat Jan 30 19:27:33 2021 +0100
+
+    Revamp the documentation to modernize and uniformize accross components
+
+commit 17371345206c2cced290c15040a032cf11903fc4
+Author: Źmicier Turok <nashtlumach@gmail.com>
+Date:   Tue Jan 19 09:56:35 2021 +0100
+
+    I18n: Update translation be (100%).
+    
+    7 translated messages.
+    
+    Transifex (https://www.transifex.com/xfce/public/).
+
+commit 16eae00d1d55d94f30caba1070e56b5c36aa79b4
+Author: Romain Bouvier <skunnyk@alteroot.org>
+Date:   Tue Dec 22 23:57:15 2020 +0100
+
+    Back to development
+
 commit ea6c56a668cbd1055b0acaa65466fd163e02b651
 Author: Romain Bouvier <skunnyk@alteroot.org>
 Date:   Tue Dec 22 21:22:33 2020 +0100

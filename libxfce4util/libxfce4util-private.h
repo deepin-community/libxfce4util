@@ -19,18 +19,19 @@
  * Boston, MA 02110-1301 USA
  */
 
-#if !defined(LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
+#if !defined(_LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
 #error "Only <libxfce4util/libxfce4util.h> can be included directly, this file may disappear or change contents"
 #endif
 
 #ifndef __LIBXFCE4UTIL_PRIVATE_H__
 #define __LIBXFCE4UTIL_PRIVATE_H__
 
-#include <libxfce4util/libxfce4util.h>
+#include "libxfce4util.h"
 
 G_BEGIN_DECLS
 
-G_GNUC_INTERNAL void _xfce_i18n_init (void);
+G_GNUC_INTERNAL void
+_xfce_i18n_init (void);
 
 G_END_DECLS
 

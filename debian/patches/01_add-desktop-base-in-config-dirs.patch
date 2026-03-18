@@ -2,11 +2,13 @@ Description: use settings from desktop-base by default
 Author: Yves-Alexis Perez <corsac@debian.org>
 Forwarded: not-needed
 
-Index: libxfce4util-4.8.2/libxfce4util/xfce-resource.c
-===================================================================
---- libxfce4util-4.8.2.orig/libxfce4util/xfce-resource.c	2011-09-12 20:45:56.000000000 +0200
-+++ libxfce4util-4.8.2/libxfce4util/xfce-resource.c	2011-09-12 22:36:08.024034835 +0200
-@@ -221,6 +221,14 @@
+---
+ libxfce4util/xfce-resource.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+--- a/libxfce4util/xfce-resource.c	2021-12-18 18:03:55.985383955 -0500
++++ b/libxfce4util/xfce-resource.c	2021-12-18 18:03:55.953384301 -0500
+@@ -229,6 +229,14 @@
    _res_split_and_append (dirs, XFCE_RESOURCE_CONFIG);
    _res_split_and_append (SYSCONFDIR "/xdg", XFCE_RESOURCE_CONFIG);
  
@@ -14,7 +16,7 @@ Index: libxfce4util-4.8.2/libxfce4util/xfce-resource.c
 +  /* add desktop-base config files to the list. quick and dirty
 +   * patch for Etch
 +   */
-+  _res_split_and_append ("/usr/share/desktop-base/profiles/xdg-config", 
++  _res_split_and_append ("/usr/share/desktop-base/profiles/xdg-config",
 +		  XFCE_RESOURCE_CONFIG);
 +#endif
 +

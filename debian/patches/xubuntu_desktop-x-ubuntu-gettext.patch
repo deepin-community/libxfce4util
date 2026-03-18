@@ -5,17 +5,17 @@ Description: retrieve translations with the X-Ubuntu-Gettext-Domain key
 Author: Lionel Le Folgoc <mrpouit@ubuntu.com>
 Forwarded: not-needed
 
---- libxfce4util-4.6.0.orig/libxfce4util/xfce-rc.c
-+++ libxfce4util-4.6.0/libxfce4util/xfce-rc.c
-@@ -506,11 +506,30 @@
-                     const gchar  *fallback)
+--- a/libxfce4util/xfce-rc.c
++++ b/libxfce4util/xfce-rc.c
+@@ -555,10 +555,30 @@ xfce_rc_read_entry (const XfceRc *rc,
  {
    const gchar *value;
+ 
 +#ifdef UBUNTU
 +  gboolean     has_gettext_domain;
 +  const gchar *gettext_domain;
 +#endif
- 
++
    g_return_val_if_fail (rc != NULL, fallback);
    g_return_val_if_fail (rc->read_entry != NULL, fallback);
    g_return_val_if_fail (key != NULL, fallback);

@@ -21,23 +21,15 @@ ChangeLog: Makefile
 dist-hook: ChangeLog
 
 EXTRA_DIST =								\
-	README.Kiosk							\
-	README.md							\
-	THANKS								\
-	TODO								\
-	gtk-doc.make							\
-	intltool-extract.in						\
-	intltool-merge.in						\
-	intltool-update.in						\
+	$(XDT_GEN_VISIBILITY_DIST) \
 	m4/introspection.m4						\
-	m4/vapigen.m4
+	m4/vapigen.m4							\
+	meson.build							\
+	meson_options.txt						\
+	po/meson.build							\
+	xfce-revision.h.in
 
-DISTCLEANFILES =							\
-	intltool-extract						\
-	intltool-merge							\
-	intltool-update	
-
-DISTCHECK_CONFIGURE_FLAGS =						\
+AM_DISTCHECK_CONFIGURE_FLAGS =						\
 	--enable-gtk-doc                                                \
 	--enable-introspection						\
 	--enable-vala=no

@@ -19,25 +19,28 @@
  * Boston, MA 02110-1301 USA
  */
 
-#if !defined(LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
+#if !defined(_LIBXFCE4UTIL_INSIDE_LIBXFCE4UTIL_H) && !defined(LIBXFCE4UTIL_COMPILATION)
 #error "Only <libxfce4util/libxfce4util.h> can be included directly, this file may disappear or change contents"
 #endif
 
 #ifndef __XFCE_KIOSK_H__
 #define __XFCE_KIOSK_H__
 
-#include <glib.h>
 #include <glib-object.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 
 #define XFCE_TYPE_KIOSK xfce_kiosk_get_type ()
 G_DECLARE_FINAL_TYPE (XfceKiosk, xfce_kiosk, XFCE, KIOSK, GObject)
 
-XfceKiosk *xfce_kiosk_new   (const gchar     *module) G_GNUC_MALLOC;
-gboolean   xfce_kiosk_query (const XfceKiosk *kiosk,
-                             const gchar     *capability);
-void       xfce_kiosk_free  (XfceKiosk       *kiosk);
+XfceKiosk *
+xfce_kiosk_new (const gchar *module) G_GNUC_MALLOC;
+gboolean
+xfce_kiosk_query (const XfceKiosk *kiosk,
+                  const gchar *capability);
+void
+xfce_kiosk_free (XfceKiosk *kiosk);
 
 G_END_DECLS
 
