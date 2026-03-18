@@ -1,17 +1,14 @@
-From: Yves-Alexis Perez <corsac@debian.org>
-Date: Fri, 26 Jul 2024 12:18:43 +0200
-Subject: use settings from desktop-base by default
-
+Description: use settings from desktop-base by default
+Author: Yves-Alexis Perez <corsac@debian.org>
 Forwarded: not-needed
+
 ---
- libxfce4util/xfce-resource.c | 8 ++++++++
+ libxfce4util/xfce-resource.c |    8 ++++++++
  1 file changed, 8 insertions(+)
 
-diff --git a/libxfce4util/xfce-resource.c b/libxfce4util/xfce-resource.c
-index 0c58fce..ca0c817 100644
---- a/libxfce4util/xfce-resource.c
-+++ b/libxfce4util/xfce-resource.c
-@@ -229,6 +229,14 @@ _res_init (void)
+--- a/libxfce4util/xfce-resource.c	2021-12-18 18:03:55.985383955 -0500
++++ b/libxfce4util/xfce-resource.c	2021-12-18 18:03:55.953384301 -0500
+@@ -229,6 +229,14 @@
    _res_split_and_append (dirs, XFCE_RESOURCE_CONFIG);
    _res_split_and_append (SYSCONFDIR "/xdg", XFCE_RESOURCE_CONFIG);
  

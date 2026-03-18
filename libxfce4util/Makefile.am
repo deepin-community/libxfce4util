@@ -21,11 +21,11 @@ lib_LTLIBRARIES =							\
 	libxfce4util.la
 
 libxfce4util_headers =							\
+	xfce-consolekit.h							\
 	xfce-debug.h							\
 	xfce-fileutils.h						\
 	xfce-generics.h							\
 	xfce-gio-extensions.h						\
-	xfce-string.h						\
 	xfce-i18n.h							\
 	xfce-kiosk.h							\
 	xfce-license.h							\
@@ -33,11 +33,13 @@ libxfce4util_headers =							\
 	xfce-posix-signal-handler.h					\
 	xfce-rc.h							\
 	xfce-resource.h							\
+	xfce-string.h						\
+	xfce-systemd.h						\
 	xfce-utf8.h
 
 libxfce4util_built_sources =						\
-	libxfce4util-alias.h						\
-	libxfce4util-aliasdef.c
+	libxfce4util-visibility.h					\
+	libxfce4util-visibility.c
 
 libxfce4utilincludedir = $(includedir)/xfce4/libxfce4util
 libxfce4utilinclude_HEADERS =						\
@@ -51,9 +53,9 @@ libxfce4util_la_SOURCES =						\
 	libxfce4util-config.c						\
 	libxfce4util-private.c						\
 	libxfce4util-private.h						\
+	xfce-consolekit.c							\
 	xfce-fileutils.c						\
 	xfce-gio-extensions.c						\
-	xfce-string.c						\
 	xfce-i18n.c							\
 	xfce-kiosk.c							\
 	xfce-license.c							\
@@ -65,6 +67,8 @@ libxfce4util_la_SOURCES =						\
 	xfce-rc-private.h						\
 	xfce-rc-simple.c						\
 	xfce-resource.c							\
+	xfce-string.c						\
+	xfce-systemd.c						\
 	xfce-utf8.c
 
 libxfce4util_la_CFLAGS = 						\
@@ -95,7 +99,6 @@ INTROSPECTION_SCANNER_ARGS = \
 	--warn-all \
 	--identifier-prefix=Xfce \
 	--identifier-prefix=xfce \
-	--identifier-prefix=libxfce \
 	-DLIBXFCE4UTIL_COMPILATION \
 	--c-include=libxfce4util/libxfce4util.h
 INTROSPECTION_COMPILER_ARGS = \
@@ -103,7 +106,7 @@ INTROSPECTION_COMPILER_ARGS = \
 	--includedir=.
 
 if HAVE_INTROSPECTION
-introspection_sources = $(filter-out %private.h, $(libxfce4util_la_SOURCES))
+introspection_sources = $(filter-out %private.h libxfce4util-config.h, $(libxfce4util_la_SOURCES))
 
 Libxfce4util-1.0.gir: libxfce4util.la Makefile
 Libxfce4util_1_0_gir_INCLUDES = GObject-2.0 GLib-2.0 Gio-2.0
@@ -132,21 +135,17 @@ endif
 ## files as part of the dist tarball.
 ##
 if MAINTAINER_MODE
-CLEANFILES +=								\
-	actual-abi							\
-	expected-abi
-
 DISTCLEANFILES =							\
 	$(libxfce4util_built_sources)
 
 BUILT_SOURCES =								\
 	$(libxfce4util_built_sources)
 
-libxfce4util-alias.h: make-libxfce4util-alias.pl libxfce4util.symbols
-	$(PERL) $(srcdir)/make-libxfce4util-alias.pl < $(srcdir)/libxfce4util.symbols > libxfce4util-alias.h
+libxfce4util-visibility.h: libxfce4util.symbols Makefile
+	$(AM_V_GEN) $(XDT_GEN_VISIBILITY) --kind=header $< $@
 
-libxfce4util-aliasdef.c: make-libxfce4util-alias.pl libxfce4util.symbols
-	$(AM_V_GEN) $(PERL) $(srcdir)/make-libxfce4util-alias.pl -def < $(srcdir)/libxfce4util.symbols > libxfce4util-aliasdef.c
+libxfce4util-visibility.c: libxfce4util.symbols Makefile
+	$(AM_V_GEN) $(XDT_GEN_VISIBILITY) --kind=source $< $@
 
 endif
 
@@ -154,11 +153,10 @@ endif
 dist-hook: all
 
 EXTRA_DIST =								\
-	abicheck.sh							\
 	libxfce4util.symbols						\
-	libxfce4util-alias.h						\
-	libxfce4util-aliasdef.c						\
-	make-libxfce4util-alias.pl
+	libxfce4util-visibility.h					\
+	libxfce4util-visibility.c					\
+	meson.build
 
 if ENABLE_VAPIGEN
 -include $(VAPIGEN_MAKEFILE)
@@ -177,10 +175,6 @@ vapidir = $(datadir)/vala/vapi
 vapi_DATA = $(VAPIGEN_VAPIS)
 ## $(VAPIGEN_VAPIS:.vapi=.deps)
 
-endif
-
-if HAVE_GNUC_VISIBILITY
-TESTS = abicheck.sh
 endif
 
 # vi:set ts=8 sw=8 noet ai nocindent:

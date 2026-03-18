@@ -1,13 +1,57 @@
-libxfce4util (4.18.2-1) unstable; urgency=medium
+libxfce4util (4.20.1-1) unstable; urgency=medium
+
+  * Team upload.
 
   [ Yves-Alexis Perez ]
-  * d/watch: track 4.18 branch
-  * d/gbp.conf: track 4.18 branches
-  * New upstream version 4.18.2
-  * d/patches: rebase against new upstream
-  * d/rules: use DEB_BUILD_MAINT_OPTIONS instead of DEB_BUILD_OPTIONS
+  * d/control: add explicit build-dep on pkgconf (Closes: #1021302)
 
- -- Yves-Alexis Perez <corsac@debian.org>  Fri, 26 Jul 2024 13:35:37 +0200
+  [ Unit 193 ]
+  * New upstream version 4.20.1.
+  * Update Standards-Version to 4.7.2.
+
+ -- Unit 193 <unit193@debian.org>  Mon, 24 Mar 2025 00:21:34 -0400
+
+libxfce4util (4.20.0-1) unstable; urgency=medium
+
+  * New upstream version 4.20.0
+  * d/rules: use DEB_BUILD_MAINT_OPTIONS instead of DEB_BUILD_OPTIONS
+  * Upload to unstable
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Wed, 18 Dec 2024 20:30:38 +0100
+
+libxfce4util (4.19.5-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Mateusz Łukasik ]
+  * New upstream version 4.19.4.
+    - Refresh d/patches/xubuntu_desktop-x-ubuntu-gettext.patch
+  * Bump Standards-Version to 4.7.0.
+
+  [ Unit 193 ]
+  * New upstream version 4.19.5.
+  * d/control:
+    - Refresh introspection packaging.
+    - Drop deprecated breaks/replaces.
+
+ -- Unit 193 <unit193@debian.org>  Mon, 02 Dec 2024 01:12:16 -0500
+
+libxfce4util (4.19.3-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.19.3.
+
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Mon, 18 Mar 2024 02:09:20 -0400
+
+libxfce4util (4.19.2-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version 4.19.2.
+  * d/libxfce4util7.symbols: Add new symbols.
+  * d/libxfce4util-dev.docs: Drop, TODO file removed upstream.
+  * d/control: Replace intltool with gettext.
+
+ -- Unit 193 <unit193@debian.org>  Thu, 17 Aug 2023 21:25:47 -0400
 
 libxfce4util (4.18.1-2) unstable; urgency=medium
 
